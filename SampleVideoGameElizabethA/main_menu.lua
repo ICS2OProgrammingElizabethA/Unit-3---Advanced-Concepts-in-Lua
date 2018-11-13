@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
 -- main_menu.lua
--- Created by: Your Name
--- Date: Month Day, Year
+-- Created by: Elizabeth
+-- Date: November 12th, 2018
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
 
@@ -35,6 +35,7 @@ local scene = composer.newScene( sceneName )
 local bkg_image
 local playButton
 local creditsButton
+local instructionsButton
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -47,6 +48,12 @@ end
 
 -----------------------------------------------------------------------------------------
 
+-- Creating Transition Function to Instructions Page
+local function InstructionsTransition( )       
+    composer.gotoScene( "Instructions Screen", {effect = "flipFadeOutIn", time = 700})
+end 
+
+--------------------------------------------------------------------------------------------
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
     composer.gotoScene( "level1_screen", {effect = "zoomInOutFade", time = 1000})
@@ -91,32 +98,49 @@ function scene:create( event )
         {   
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth/2,
-            y = display.contentHeight*7/8,
+            y = display.contentHeight*6/8,
 
             -- Insert the images here
-            defaultFile = "Images/Start Button Unpressed.png",
-            overFile = "Images/Start Button Pressed.png",
+            defaultFile = "Images/playButtonUnpressed.png",
+            overFile = "Images/playButtonPressed.png",
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
         } )
 
-    -----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+    -- Creating instructions Button
+    instructionsButton = widget.newButton( 
+        {
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth/6,
+            y = display.contentHeight*6/8,
+
+            -- Insert the images here
+            defaultFile = "Images/HelpButtonUnpressed.png",
+            overFile = "Images/HelpButtonPressed.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = InstructionsTransition
+        } ) 
+
+    ---------------------------------------------------------------------
 
     -- Creating Credits Button
     creditsButton = widget.newButton( 
-        {
+        {   
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*7/8,
-            y = display.contentHeight*7/8,
+            y = display.contentHeight*6/8,
 
             -- Insert the images here
-            defaultFile = "Images/Credits Button Unpressed.png",
-            overFile = "Images/Credits Button Pressed.png",
+            defaultFile = "Images/CreditsButtonUnpressed.png",
+            overFile = "Images/CreditsButtonPressed.png",
 
-            -- When the button is released, call the Credits transition function
-            onRelease = CreditsTransition
-        } ) 
+            -- When the button is released, call the Level1 screen transition function
+            onRelease = Level1ScreenTransition          
+        } )
     
     -- ADD INSTRUCTIONS BUTTON WIDGET
 
@@ -125,6 +149,7 @@ function scene:create( event )
     -- Associating button widgets with this scene
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
+    sceneGroup:insert( instructionsButton )
     
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
 

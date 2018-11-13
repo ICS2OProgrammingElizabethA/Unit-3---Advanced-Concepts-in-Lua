@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
 -- splash_screen.lua
--- Created by: Your Name
--- Date: Month Day, Year
+-- Created by: Elizabeth
+-- Date: November 12th, 2018
 -- Description: This is the splash screen of the game. It displays the 
 -- company logo that...
 -----------------------------------------------------------------------------------------
@@ -19,29 +19,57 @@ sceneName = "splash_screen"
 local scene = composer.newScene( sceneName )
 
 ----------------------------------------------------------------------------------------
+-- Sounds
+-----------------------------------------------------------------------------------------
+local backgroundSound = audio.loadSound("Sounds/clearday.mp3")
+local backgroundSoundChannel
+
+----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
  
 -- The local variables for this scene
-local beetleship
-local scrollXSpeed = 8
-local scrollYSpeed = -3
-local jungleSounds = audio.loadSound("Sounds/animals144.mp3")
-local jungleSoundsChannel
+local banana
+local scrollSpeedBanana = 3
+local gameTitleSpeed = 4
+local gameTitle
+
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
--- The function that moves the beetleship across the screen
-local function moveBeetleship()
-    beetleship.x = beetleship.x + scrollXSpeed
-    beetleship.y = beetleship.y + scrollYSpeed
+--Function: MoveBanana
+--Input: this function accepts an event listener
+--Output: none
+--Description: This function adds the scroll speed to the x-value of the banana
+local function MoveBanana(event)
+    --add the scroll speed to the x-value of the banana
+    banana.x = banana.x + scrollSpeedBanana
+    banana.y = banana.y + scrollSpeedBanana
+    --banana.y = banana.y - scrollSpeedBanana
+
+    --change the transparency of the banana every time it so fast that it fades out
+    banana.alpha = banana.alpha - 0.000000001
 end
 
 -- The function that will go to the main menu 
 local function gotoMainMenu()
     composer.gotoScene( "main_menu" )
+end
+
+
+local function HideTitle()
+    gameTitle.isVisible = false
+    MoveBanana(event)
+end
+
+local function MoveTitle(event)
+    --add the scroll speed to the x-value of the ship
+    gameTitle.x = gameTitle.x + gameTitleSpeed
+
+    --change the transparency of the ship every time it so fast that it fades out
+    gameTitle.alpha = gameTitle.alpha - 0.00001
 end
 
 -----------------------------------------------------------------------------------------
@@ -55,19 +83,36 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- set the background to be black
-    display.setDefault("background", 0, 0, 0)
+    local backgroundImage = display.newImageRect("Images/background.png", 2048, 1536)
 
     -- Insert the beetleship image
-    beetleship = display.newImageRect("Images/beetleship.png", 200, 200)
+    local banana = display.newImageRect("Images/CompanyLogoElizabeth@2x copy.png", 200, 400)
 
     -- set the initial x and y position of the beetleship
-    beetleship.x = 100
-    beetleship.y = display.contentHeight/2
+    banana.x = 200
+    banana.y = 0
+
+    --set the image to be transparent
+    banana.alpha = 1
+
+    --display the game title
+    gameTitle = display.newText("The Jojo's", 0, 300, native.systemFontBold, 70)
+    gameTitle:setTextColor(102/255, 234/255, 255/255)
+    gameTitle.isVisible = true
+    timer.performWithDelay(1000, HideTitle)
+
+    -- set the initial x and y position of the beetleship
+    gameTitle.x = 0
+    gameTitle.y = 300
+    
+    --set the image to be transparent
+    gameTitle.alpha = 1
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( beetleship )
+    sceneGroup:insert( MoveBanana )
+    sceneGroup:insert( MoveTitle )
 
-end -- function scene:create( event )
+end --function scene:create( event )
 
 --------------------------------------------------------------------------------------------
 
@@ -90,10 +135,11 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        jungleSoundsChannel = audio.play(jungleSounds )
+        backgroundSoundChannel = audio.play(backgroundSound)
 
         -- Call the moveBeetleship function as soon as we enter the frame.
-        Runtime:addEventListener("enterFrame", moveBeetleship)
+       Runtime:addEventListener("enterFrame", MoveBanana)
+       Runtime:addEventListener("enterFrame", MoveTitle)
 
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
@@ -124,7 +170,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         
         -- stop the jungle sounds channel for this screen
-        audio.stop(jungleSoundsChannel)
+        audio.stop(backgroundSoundChannel)
     end
 
 end --function scene:hide( event )
