@@ -98,7 +98,7 @@ function scene:create( event )
     gameTitle = display.newText("The Jojo's", 0, 300, native.systemFontBold, 70)
     gameTitle:setTextColor(102/255, 234/255, 255/255)
     gameTitle.isVisible = true
-    timer.performWithDelay(1000, HideTitle)
+    timer.performWithDelay(2000, HideTitle)
 
     -- set the initial x and y position of the beetleship
     gameTitle.x = 0

@@ -50,7 +50,7 @@ end
 
 -- Creating Transition Function to Instructions Page
 local function InstructionsTransition( )       
-    composer.gotoScene( "Instructions Screen", {effect = "flipFadeOutIn", time = 700})
+    composer.gotoScene( "instructions", {effect = "flipFadeOutIn", time = 700})
 end 
 
 --------------------------------------------------------------------------------------------
