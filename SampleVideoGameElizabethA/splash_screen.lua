@@ -29,10 +29,10 @@ local backgroundSoundChannel
 -----------------------------------------------------------------------------------------
  
 -- The local variables for this scene
-local banana
 local scrollSpeedBanana = 3
 local gameTitleSpeed = 4
 local gameTitle
+local banana
 
 
 --------------------------------------------------------------------------------------------
@@ -58,7 +58,6 @@ local function gotoMainMenu()
     composer.gotoScene( "main_menu" )
 end
 
-
 local function HideTitle()
     gameTitle.isVisible = false
     MoveBanana(event)
@@ -77,7 +76,7 @@ end
 -----------------------------------------------------------------------------------------
 
 -- The function called when the screen doesn't exist
-function scene:create( event )
+function scene:create( event ) 
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
@@ -86,9 +85,9 @@ function scene:create( event )
     local backgroundImage = display.newImageRect("Images/background.png", 2048, 1536)
 
     -- Insert the beetleship image
-    local banana = display.newImageRect("Images/CompanyLogoElizabeth@2x copy.png", 200, 400)
+    banana = display.newImageRect("Images/CompanyLogo.png", 200, 0)
 
-    -- set the initial x and y position of the beetleship
+    -- set the initial x and y position of the banana
     banana.x = 200
     banana.y = 0
 
@@ -109,11 +108,10 @@ function scene:create( event )
     gameTitle.alpha = 1
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( MoveBanana )
-    sceneGroup:insert( MoveTitle )
+    sceneGroup:insert( banana )
+    sceneGroup:insert( gameTitle )
 
 end --function scene:create( event )
-
 --------------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
