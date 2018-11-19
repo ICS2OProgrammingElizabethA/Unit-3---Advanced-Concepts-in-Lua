@@ -31,6 +31,7 @@ local backgroundSoundChannel
 -- The local variables for this scene
 local scrollSpeedBanana = 3
 local gameTitleSpeed = 4
+local backgroundImage
 local gameTitle
 local banana
 
@@ -43,7 +44,7 @@ local banana
 --Input: this function accepts an event listener
 --Output: none
 --Description: This function adds the scroll speed to the x-value of the banana
-local function MoveBanana(event)
+local function MoveBanana()
     --add the scroll speed to the x-value of the banana
     banana.x = banana.x + scrollSpeedBanana
     banana.y = banana.y + scrollSpeedBanana
@@ -63,7 +64,7 @@ local function HideTitle()
     MoveBanana(event)
 end
 
-local function MoveTitle(event)
+local function MoveTitle()
     --add the scroll speed to the x-value of the ship
     gameTitle.x = gameTitle.x + gameTitleSpeed
 
@@ -82,14 +83,14 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- set the background to be black
-    local backgroundImage = display.newImageRect("Images/background.png", 2048, 1536)
+    backgroundImage = display.newImageRect("Images/background.png", 2048, 1536)
 
     -- Insert the beetleship image
-    banana = display.newImageRect("Images/CompanyLogo.png", 200, 0)
+    banana = display.newImageRect("Images/CompanyLogo.png", 200, 200)
 
     -- set the initial x and y position of the banana
     banana.x = 200
-    banana.y = 0
+    banana.y = 200
 
     --set the image to be transparent
     banana.alpha = 1
@@ -98,7 +99,7 @@ function scene:create( event )
     gameTitle = display.newText("The Jojo's", 0, 300, native.systemFontBold, 70)
     gameTitle:setTextColor(102/255, 234/255, 255/255)
     gameTitle.isVisible = true
-    timer.performWithDelay(2000, HideTitle)
+    
 
     -- set the initial x and y position of the beetleship
     gameTitle.x = 0
@@ -108,6 +109,7 @@ function scene:create( event )
     gameTitle.alpha = 1
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( backgroundImage )
     sceneGroup:insert( banana )
     sceneGroup:insert( gameTitle )
 
@@ -136,8 +138,10 @@ function scene:show( event )
         backgroundSoundChannel = audio.play(backgroundSound)
 
         -- Call the moveBeetleship function as soon as we enter the frame.
-       Runtime:addEventListener("enterFrame", MoveBanana)
-       Runtime:addEventListener("enterFrame", MoveTitle)
+        Runtime:addEventListener("enterFrame", MoveBanana)
+        Runtime:addEventListener("enterFrame", MoveTitle)
+
+        timer.performWithDelay(2000, HideTitle)
 
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
