@@ -112,25 +112,6 @@ function scene:create( event )
 
 --------------------------------------------------------------------------
 
-    -- Creating instructions Button
-    instructionsButton = widget.newButton( 
-        {
-            -- Set its position on the screen relative to the screen size
-            x = display.contentWidth/6,
-            y = display.contentHeight*6/8,
-            width = 200,
-            height = 200,
-
-            -- Insert the images here
-            defaultFile = "Images/HelpButtonUnpressed.png",
-            overFile = "Images/HelpButtonPressed.png",
-
-            -- When the button is released, call the Credits transition function
-            onRelease = InstructionsTransition
-        } ) 
-
-    ---------------------------------------------------------------------
-
     -- Creating Credits Button
     creditsButton = widget.newButton( 
         {   
@@ -150,15 +131,31 @@ function scene:create( event )
     
     -- ADD INSTRUCTIONS BUTTON WIDGET
 
+    -- Creating instructions Button
+    instructionsButton = widget.newButton( 
+        {
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth/6,
+            y = display.contentHeight*6/8,
+            width = 200,
+            height = 200,
+
+            -- Insert the images here
+            defaultFile = "Images/HelpButtonUnpressed.png",
+            overFile = "Images/HelpButtonPressed.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = InstructionsTransition
+        } ) 
+
     -----------------------------------------------------------------------------------------
 
     -- Associating button widgets with this scene
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
-    sceneGroup:insert( instructionsButton )
     
     -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
-
+    sceneGroup:insert( instructionsButton )
 end -- function scene:create( event )   
 
 
