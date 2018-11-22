@@ -58,11 +58,12 @@ local numLives = 2
 
 local rArrow 
 local uArrow
+local leftArrow
 
 local motionx = 0
-local SPEED = 5
-local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local SPEED = 4
+local LINEAR_VELOCITY = -110
+local GRAVITY = 6.5
 
 local leftW 
 local topW
@@ -82,6 +83,11 @@ local questionsAnswered = 0
 local function right (touch)
     motionx = SPEED
     character.xScale = 1
+end
+
+local function left (touch)
+    motionx = -SPEED 
+    character.xScale = - 1
 end
 
 -- When up arrow is touched, add vertical so it can jump
@@ -107,11 +113,13 @@ end
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
     uArrow:addEventListener("touch", up)
+    leftArrow:addEventListener("touch", left)
 end
 
 local function RemoveArrowEventListeners()
     rArrow:removeEventListener("touch", right)
     uArrow:removeEventListener("touch", up)
+    leftArrow:removeEventListener("touch", left)
 end
 
 local function AddRuntimeListeners()
@@ -460,8 +468,15 @@ function scene:create( event )
     uArrow.x = display.contentWidth * 8.2 / 10
     uArrow.y = display.contentHeight * 8.5 / 10
 
+--create the left arrow
+    leftArrow = display.newImageRect("Images/LeftArrowUnpressed.png", 100, 50)
+    leftArrow.x = display.contentWidth * 7.3/ 10
+    leftArrow.y = display.contentHeight * 9.5/ 10
+
+
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( uArrow)
+    sceneGroup:insert( leftArrow)
 
     --WALLS--
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
