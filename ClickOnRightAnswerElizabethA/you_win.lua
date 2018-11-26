@@ -29,7 +29,7 @@ local scene = composer.newScene( sceneName )
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-local youWinSound = audio.loadSound( "Sounds/youWinSound.wav")
+local youWinSound = audio.loadSound( "Sounds/CorrectAnswerOld.mp3")
 local youWinSoundChannel
 
 -- local variables for the scene

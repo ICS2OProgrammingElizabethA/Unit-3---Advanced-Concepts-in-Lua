@@ -158,6 +158,7 @@ local function DisplayQuestion()
     --creating wrong answers
     wrongText1.text = wrongAnswer1
     wrongText2.text = wrongAnswer2
+    wrongText3.text = wrongAnswer3
 end
 
 local function PositionAnswers()

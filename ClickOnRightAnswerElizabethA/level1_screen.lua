@@ -82,7 +82,16 @@ local alreadyClickedAnswer = false
 
 
 -----------------------------------------------------------------------------------------
--- SOUND
+-- SOUNDS
+local backgroundSound = audio.loadSound("Sounds/level1Music.wav")
+local backgroundSoundChannel
+
+local correctSound = audio.loadSound("Sounds/CorrectAnswer.mp3")
+local correcSoundChannel
+
+local incorrectSound = audio.loadSound("Sounds/wrongbuzzer (3).mp3")
+local incorrectSoundChannel
+
 -----------------------------------------------------------------------------------------
 
 
@@ -216,6 +225,7 @@ local function TouchListenerAnswer(touch)
             -- increase the number correct by 1
             numberCorrect = numberCorrect + 1
             CheckPoints()
+            correcSoundChannel = audio.play(correctSound)
             -- call RestartScene after 1 second
             timer.performWithDelay( 1000, RestartScene )
         end        
@@ -236,6 +246,7 @@ local function TouchListenerWrongAnswer1(touch)
             incorrect.isVisible = true
             -- decrease a life
             lives = lives - 1
+            incorrectSoundChannel = audio.play(incorrectSound)
             -- call RestartScene after 1 second
             timer.performWithDelay( 1000, RestartScene )            
         end        
@@ -258,6 +269,8 @@ local function TouchListenerWrongAnswer2(touch)
 
                 -- decrease a life
                 lives = lives - 1
+                incorrectSoundChannel = audio.play(incorrectSound)
+
                 -- call RestartScene after 1 second
                 timer.performWithDelay( 1000, RestartScene )            
             end        
@@ -280,6 +293,8 @@ local function TouchListenerWrongAnswer3(touch)
 
                 -- decrease a life
                 lives = lives - 1
+                incorrectSoundChannel = audio.play(incorrectSound)
+
                 -- call RestartScene after 1 second
                 timer.performWithDelay( 1000, RestartScene )            
             end        
@@ -400,7 +415,7 @@ function scene:show( event )
     --local sceneGroup = self.view
     local phase = event.phase
 
-
+    backgroundSoundChannel = audio.play(backgroundSound)
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
