@@ -60,6 +60,13 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+local correctObject
+local incorrectObject
+local numberOfPoints = 0
+
+--SOUNDS
+
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -161,6 +168,30 @@ local function DisplayQuestion()
     wrongText3.text = wrongAnswer3
 end
 
+
+        --if the users answer and the correct answer and the correct answer are the same:
+        if (userAnswer == answer) then
+            correctObject.isVisible = true 
+            --correctSoundChannel = audio.play(correctSound)
+            incorrectObject.isVisible = false
+            timer.performWithDelay(2000,HideCorrect)
+            numberOfPoints = numberOfPoints + 1
+
+            event.target.text = "" 
+
+        -- create increasing points in the text object
+            pointsTextObject.text = "Points = ".. numberOfPoints
+
+        else 
+            correctObject.isVisible = false 
+            --wrongSoundChannel = audio.play(wrongSound)
+            incorrectObject.isVisible = true
+            timer.performWithDelay(2000,HideIncorrect)
+            lives = lives - 1
+
+            event.target.text = "" 
+        end
+
 local function PositionAnswers()
 
     --creating random start position in a cretain area
@@ -238,6 +269,16 @@ function scene:create( event )
     --setting its colour
     cover:setFillColor(96/255, 96/255, 96/255)
 
+    -- create the text object that will say Correct, set the colour and then hide it
+    correctObject = display.newText("Correct", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
+    correctObject:setTextColor(100/255, 47/255, 210/255)
+    correctObject.isVisible = false
+
+    -- create the text object that will say Incorrect, set the colour and then hide it
+    incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
+    incorrectObject:setTextColor(0/255, 100/255, 0/255)
+    incorrectObject.isVisible = false
+
     -- create the question text object
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
 
@@ -248,7 +289,8 @@ function scene:create( event )
     wrongText1.anchorX = 0
     wrongText2 = display.newText("", X1, Y1, Arial, 75)
     wrongText2.anchorX = 0
-
+    wrongText3 = display.newText("", X2, Y2, Arial, 75)
+    wrongText3.anchorX = 0
     -----------------------------------------------------------------------------------------
 
     -- insert all objects for this scene into the scene group
@@ -258,6 +300,7 @@ function scene:create( event )
     sceneGroup:insert(answerText)
     sceneGroup:insert(wrongText1)
     sceneGroup:insert(wrongText2)
+    sceneGroup:insert(wrongText3)
 
 
 end --function scene:create( event )
