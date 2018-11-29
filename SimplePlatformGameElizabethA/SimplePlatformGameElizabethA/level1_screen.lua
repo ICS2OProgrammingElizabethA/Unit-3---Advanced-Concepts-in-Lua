@@ -206,8 +206,14 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 2) then
+            if (numLives == 3) then
     -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 2) then
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = false

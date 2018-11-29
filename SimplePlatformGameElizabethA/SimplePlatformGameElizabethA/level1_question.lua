@@ -63,6 +63,9 @@ local textTouched = false
 local correctObject
 local incorrectObject
 local numberOfPoints = 0
+local numLives = 3
+
+local pointsTextObject
 
 --SOUNDS
 
@@ -78,11 +81,23 @@ local function BackToLevel1()
     ResumeGame()
 end 
 
+
+local function HideCorrect()
+    correctObject.isVisible = false
+end
+
+local function HideIncorrect()
+    incorrectObject.isVisible = false 
+end
+
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
-    
+    correctObject.isVisible = true
+    timer.performWithDelay(1000,HideCorrect)
+    numberOfPoints = numberOfPoints + 1
+
     if (touch.phase == "ended") then
 
         BackToLevel1( )
@@ -93,6 +108,9 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
+    numLives = numLives - 1
+    incorrectObject.isVisible = true
+    timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
         
@@ -105,6 +123,9 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
+    numLives = numLives - 1
+    incorrectObject.isVisible = true
+    timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
 
@@ -116,6 +137,9 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
+    numLives = numLives - 1
+    incorrectObject.isVisible = true
+    timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
 
@@ -168,29 +192,6 @@ local function DisplayQuestion()
     wrongText3.text = wrongAnswer3
 end
 
-
-        --if the users answer and the correct answer and the correct answer are the same:
-        if (userAnswer == answer) then
-            correctObject.isVisible = true 
-            --correctSoundChannel = audio.play(correctSound)
-            incorrectObject.isVisible = false
-            timer.performWithDelay(2000,HideCorrect)
-            numberOfPoints = numberOfPoints + 1
-
-            event.target.text = "" 
-
-        -- create increasing points in the text object
-            pointsTextObject.text = "Points = ".. numberOfPoints
-
-        else 
-            correctObject.isVisible = false 
-            --wrongSoundChannel = audio.play(wrongSound)
-            incorrectObject.isVisible = true
-            timer.performWithDelay(2000,HideIncorrect)
-            lives = lives - 1
-
-            event.target.text = "" 
-        end
 
 local function PositionAnswers()
 
@@ -275,9 +276,15 @@ function scene:create( event )
     correctObject.isVisible = false
 
     -- create the text object that will say Incorrect, set the colour and then hide it
-    incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
+    incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/2.5, nil, 50 )
     incorrectObject:setTextColor(0/255, 100/255, 0/255)
     incorrectObject.isVisible = false
+
+    -- create points box and make it visible
+    pointsTextObject = display.newText( "Points = ".. numberOfPoints, 430, 110, nil, 60 )
+    pointsTextObject:setTextColor(214/255, 66/255, 86/255)
+
+    pointsTextObject.text = "Points = ".. numberOfPoints
 
     -- create the question text object
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
