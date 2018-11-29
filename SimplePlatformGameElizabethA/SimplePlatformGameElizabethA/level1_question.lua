@@ -62,7 +62,10 @@ local textTouched = false
 
 local correctObject
 local incorrectObject
-local numberOfPoints = 0
+
+local heart1
+local heart2
+local heart3
 local numLives = 3
 
 local pointsTextObject
@@ -73,6 +76,39 @@ local pointsTextObject
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
+
+--make a function to update hearts
+local function UpdateHearts()
+    -- update hearts
+                if (numLives == 3) then
+    -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 2) then
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 1) then
+                -- update hearts
+                heart1.isVisible = true
+                heart2.isVisible = false
+                heart3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)            
+
+            elseif (numLives == 0) then
+                -- update hearts
+                heart1.isVisible = false
+                heart2.isVisible = false
+                heart3.isVisible = false
+                timer.performWithDelay(200, YouLoseTransition)
+            end
+        end
+--end
 
 --making transition to next scene
 local function BackToLevel1() 
@@ -94,9 +130,9 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
+
     correctObject.isVisible = true
     timer.performWithDelay(1000,HideCorrect)
-    numberOfPoints = numberOfPoints + 1
 
     if (touch.phase == "ended") then
 
@@ -109,6 +145,7 @@ end
 local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
     numLives = numLives - 1
+    UpdateHearts()
     incorrectObject.isVisible = true
     timer.performWithDelay(1000,HideIncorrect)
     
@@ -124,11 +161,12 @@ end
 local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
     numLives = numLives - 1
+    UpdateHearts()
     incorrectObject.isVisible = true
     timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
-
+        
         BackToLevel1( )
         
     end 
@@ -138,6 +176,7 @@ end
 local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
     numLives = numLives - 1
+    UpdateHearts()
     incorrectObject.isVisible = true
     timer.performWithDelay(1000,HideIncorrect)
     
@@ -279,12 +318,6 @@ function scene:create( event )
     incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/2.5, nil, 50 )
     incorrectObject:setTextColor(0/255, 100/255, 0/255)
     incorrectObject.isVisible = false
-
-    -- create points box and make it visible
-    pointsTextObject = display.newText( "Points = ".. numberOfPoints, 430, 110, nil, 60 )
-    pointsTextObject:setTextColor(214/255, 66/255, 86/255)
-
-    pointsTextObject.text = "Points = ".. numberOfPoints
 
     -- create the question text object
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)

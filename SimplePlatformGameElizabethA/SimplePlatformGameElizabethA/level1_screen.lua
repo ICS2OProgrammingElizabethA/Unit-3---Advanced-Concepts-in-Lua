@@ -81,6 +81,10 @@ local questionsAnswered = 0
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
  
+--SOUNDS
+local popSound = audio.loadSound("Sounds/pop.mp3")
+local popSoundChannel
+
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
@@ -162,11 +166,13 @@ end
 local function MakeSoccerBallsVisible()
     ball1.isVisible = true
     ball2.isVisible = true
+    ball3.isVisible = true
 end
 
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
+    heart3.isVisible = true
 end
 
 local function YouLoseTransition()
