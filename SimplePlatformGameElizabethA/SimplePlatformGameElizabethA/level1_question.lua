@@ -79,9 +79,8 @@ local pointsTextObject
 
 --make a function to update hearts
 local function UpdateHearts()
-    -- update hearts
-                if (numLives == 3) then
-    -- update hearts
+            -- update hearts
+            if (numLives ==   3) then
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = true
