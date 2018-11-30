@@ -69,6 +69,7 @@ local GRAVITY = 6.5
 local leftW 
 local topW
 local floor
+local rightW
 
 local ball1
 local ball2
@@ -84,6 +85,10 @@ local questionsAnswered = 0
 --SOUNDS
 local popSound = audio.loadSound("Sounds/pop.mp3")
 local popSoundChannel
+local backgroundSound = audio.loadSound("Sounds/Grease_Monkey.mp3")
+local backgroundSoundChannel
+local winSound = audio.loadSound("Sounds/Cheer.m4a")
+local winSoundChannel
 
 -- When right arrow is touched, move character right
 local function right (touch)
@@ -264,6 +269,7 @@ local function onCollision( self, event )
         if (event.target.myName == "door") then
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
+                winSoundChannel = audio.play(winSound)
                 composer.gotoScene( "you_win" )
                 -- after getting 3 questions right, go to the you win screen
             end
@@ -325,6 +331,8 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2})
+
 
     physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
@@ -351,6 +359,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
+    physics.removeBody(rightW)
  
 end
 
@@ -594,6 +603,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
         -- start physics
         physics.start()
+        backgroundSoundChannel = audio.play(backgroundSound)
 
         -- set gravity
         physics.setGravity( 0, GRAVITY )

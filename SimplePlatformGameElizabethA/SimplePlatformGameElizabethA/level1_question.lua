@@ -71,7 +71,12 @@ local numLives = 3
 local pointsTextObject
 
 --SOUNDS
-
+local incorrectSound = audio.loadSound("Sounds/incorrect.mp3")
+local incorrectSoundChannel
+local correctSound
+local correctSoundChannel
+local loseSound = audio.loadSound("Sounds/YouLose.mp3")
+local loseSoundChannel
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
@@ -104,6 +109,7 @@ local function UpdateHearts()
                 heart1.isVisible = false
                 heart2.isVisible = false
                 heart3.isVisible = false
+                loseSoundChannel = audio.play(loseSound)
                 timer.performWithDelay(200, YouLoseTransition)
             end
         end
@@ -146,6 +152,7 @@ local function TouchListenerWrongAnswer(touch)
     numLives = numLives - 1
     UpdateHearts()
     incorrectObject.isVisible = true
+    incorrectSoundChannel = audio.play(incorrectSound)
     timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
@@ -162,6 +169,7 @@ local function TouchListenerWrongAnswer2(touch)
     numLives = numLives - 1
     UpdateHearts()
     incorrectObject.isVisible = true
+    incorrectSoundChannel = audio.play(incorrectSound)
     timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
@@ -177,6 +185,7 @@ local function TouchListenerWrongAnswer3(touch)
     numLives = numLives - 1
     UpdateHearts()
     incorrectObject.isVisible = true
+    incorrectSoundChannel = audio.play(incorrectSound)
     timer.performWithDelay(1000,HideIncorrect)
     
     if (touch.phase == "ended") then
