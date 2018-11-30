@@ -52,10 +52,10 @@ local door
 local door
 local character
 
-local heart1
-local heart2
-local heart3
-local numLives = 3
+ heart1 = nil
+ heart2 = nil
+ heart3 = nil
+ numLives = 3
 
 local rArrow 
 local uArrow
@@ -77,6 +77,10 @@ local ball3
 local theBall
 
 local questionsAnswered = 0
+
+local loseSound = audio.loadSound("Sounds/YouLose.mp3")
+local loseSoundChannel
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -180,7 +184,9 @@ local function MakeHeartsVisible()
     heart3.isVisible = true
 end
 
-local function YouLoseTransition()
+function YouLoseTransition()
+    loseSoundChannel = audio.play(loseSound)
+    audio.stop(backgroundSoundChannel)
     composer.gotoScene( "you_lose" )
 end
 
@@ -224,25 +230,26 @@ local function onCollision( self, event )
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == 2) then
+            elseif (numLives == 1) then
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == 1) then
-                -- update hearts
+            elseif (numLives == 0) then
                 heart1.isVisible = true
                 heart2.isVisible = false
                 heart3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter)            
+                timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == 0) then
+
+            elseif (numLives == -1) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
                 heart3.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
+                loseSoundChannel = audio.play(loseSound)
+                timer.performWithDelay(200, YouLoseTransition)            
             end
         end
 

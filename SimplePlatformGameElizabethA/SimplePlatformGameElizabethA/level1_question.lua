@@ -62,18 +62,12 @@ local textTouched = false
 
 local correctObject
 local incorrectObject
-
-local heart1
-local heart2
-local heart3
-local numLives = 3
-
 local pointsTextObject
 
 --SOUNDS
 local incorrectSound = audio.loadSound("Sounds/incorrect.mp3")
 local incorrectSoundChannel
-local correctSound
+local correctSound = audio.loadSound("Sounds/correct.mp3")
 local correctSoundChannel
 local loseSound = audio.loadSound("Sounds/YouLose.mp3")
 local loseSoundChannel
@@ -85,31 +79,30 @@ local loseSoundChannel
 --make a function to update hearts
 local function UpdateHearts()
             -- update hearts
-            if (numLives ==   3) then
+            if (numLives ==  3) then
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == 2) then
+            elseif (numLives == 0) then
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == 1) then
+            elseif (numLives == -2) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
                 heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter)            
 
-            elseif (numLives == 0) then
+            elseif (numLives == -3) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
                 heart3.isVisible = false
-                loseSoundChannel = audio.play(loseSound)
                 timer.performWithDelay(200, YouLoseTransition)
             end
         end
@@ -135,6 +128,7 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
     userAnswer = answerText.text
+    correctSoundChannel = audio.play(correctSound)
 
     correctObject.isVisible = true
     timer.performWithDelay(1000,HideCorrect)
@@ -318,7 +312,7 @@ function scene:create( event )
     cover:setFillColor(96/255, 96/255, 96/255)
 
     -- create the text object that will say Correct, set the colour and then hide it
-    correctObject = display.newText("Correct", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
+    correctObject = display.newText("Correct", display.contentWidth/2, display.contentHeight*1/2.3, nil, 50 )
     correctObject:setTextColor(100/255, 47/255, 210/255)
     correctObject.isVisible = false
 
