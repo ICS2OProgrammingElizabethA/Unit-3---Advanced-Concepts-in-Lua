@@ -78,14 +78,6 @@ local theBall
 
 local questionsAnswered = 0
 
-local loseSound = audio.loadSound("Sounds/YouLose.mp3")
-local loseSoundChannel
-
-
------------------------------------------------------------------------------------------
--- LOCAL SCENE FUNCTIONS
------------------------------------------------------------------------------------------ 
- 
 --SOUNDS
 local popSound = audio.loadSound("Sounds/pop.mp3")
 local popSoundChannel
@@ -93,6 +85,13 @@ local backgroundSound = audio.loadSound("Sounds/Grease_Monkey.mp3")
 local backgroundSoundChannel
 local winSound = audio.loadSound("Sounds/Cheer.m4a")
 local winSoundChannel
+local loseSound = audio.loadSound("Sounds/YouLose.mp3")
+local loseSoundChannel
+
+
+-----------------------------------------------------------------------------------------
+-- LOCAL SCENE FUNCTIONS
+----------------------------------------------------------------------------------------- 
 
 -- When right arrow is touched, move character right
 local function right (touch)

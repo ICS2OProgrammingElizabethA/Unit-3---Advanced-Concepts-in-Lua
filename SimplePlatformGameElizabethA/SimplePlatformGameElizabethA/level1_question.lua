@@ -85,20 +85,20 @@ local function UpdateHearts()
                 heart3.isVisible = true
                 timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == 0) then
+            elseif (numLives == 2) then
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter)
 
-            elseif (numLives == -2) then
+            elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
                 heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter)            
 
-            elseif (numLives == -3) then
+            elseif (numLives == 0) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
@@ -143,7 +143,6 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer(touch)
     userAnswer = wrongText1.text
-    numLives = numLives - 1
     UpdateHearts()
     incorrectObject.isVisible = true
     incorrectSoundChannel = audio.play(incorrectSound)
@@ -160,7 +159,6 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer2(touch)
     userAnswer = wrongText2.text
-    numLives = numLives - 1
     UpdateHearts()
     incorrectObject.isVisible = true
     incorrectSoundChannel = audio.play(incorrectSound)
@@ -176,7 +174,6 @@ end
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerWrongAnswer3(touch)
     userAnswer = wrongText3.text
-    numLives = numLives - 1
     UpdateHearts()
     incorrectObject.isVisible = true
     incorrectSoundChannel = audio.play(incorrectSound)
