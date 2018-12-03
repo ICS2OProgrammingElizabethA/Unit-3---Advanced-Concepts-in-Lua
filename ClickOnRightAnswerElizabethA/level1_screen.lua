@@ -115,7 +115,7 @@ local function DetermineAnswers()
     answer = firstNumber + secondNumber
     wrongAnswer1 = answer + math.random(1,4)
     wrongAnswer2 = answer + math.random(5,8)
-    wrongAnswer3 = answer +math.random(6,15)
+    wrongAnswer3 = answer + math.random(6,15)
 end
 
 -- Function that changes the answers for a new question and places them randomly in one of the positions
