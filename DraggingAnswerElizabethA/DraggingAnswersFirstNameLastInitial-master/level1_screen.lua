@@ -252,7 +252,7 @@ local function TouchListenerAnswerbox(touch)
     --only work if none of the other boxes have been touched
     if (alternateAnswerBox1AlreadyTouched == false) or
         --(alternateAnswerBox2AlreadyTouched == false) and
-        (alternateAnswerBox2AlreadyTouched) == false) then
+        (alternateAnswerBox2AlreadyTouched == false) then
 
         if (touch.phase == "began") then
 
@@ -472,7 +472,7 @@ function scene:create( event )
     answerbox = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
     alternateAnswerBox1 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
-    alternateAnswerBox3 = display.newText("", display.contentWidth * 0.9, 0 nil, 100)
+    alternateAnswerBox3 = display.newText("", display.contentWidth * 0.9, 0, nil, 100)
 
     -- set the x positions of each of the answer boxes
     answerboxPreviousX = display.contentWidth * 0.9
