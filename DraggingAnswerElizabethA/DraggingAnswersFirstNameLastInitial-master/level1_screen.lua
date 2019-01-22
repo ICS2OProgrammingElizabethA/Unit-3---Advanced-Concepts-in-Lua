@@ -23,6 +23,11 @@ sceneName = "level1_screen"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
+--SOUNDS
+local level1Sound = audio.loadSound("Sounds/level1.mp3")
+local level1SoundChannel
+local incorrectSound = audio.loadSound("Sounds/boo.mp3")
+local incorrectSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -517,6 +522,7 @@ function scene:show( event )
         -- Called when the scene is still off screen (but is about to come on screen).    
 
     elseif ( phase == "did" ) then
+        level1SoundChannel = audio.play(level1Sound)
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
